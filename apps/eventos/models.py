@@ -26,3 +26,16 @@ class Evento(models.Model):
 
     def __str__(self):
         return self.titulo
+    
+#ORM (conjunto de funcionalidades) -> CRUD (CREATE, READ, UPDATE, DELETE)
+#MySQL- connector sqlite 3 psicopg -> Escribiamos las sentencias SQL.
+#cursor. execute("""
+# SELECT *FROM tabla");
+
+#Los modelos nos conectan a la base de datos.
+#ORM nos permite trabajar con la base de datos usando objetos de Python.
+
+# ORM Object Relational Mapping (Mapeador objeto-relacional)
+# SELECT * FROM evento WHERE id = 1;
+
+#evento_seleccionado = Evento.objects.get(pk=1)
