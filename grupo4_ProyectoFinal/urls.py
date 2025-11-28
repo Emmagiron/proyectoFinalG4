@@ -23,8 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #Pagina de inicio www.mipagina.com/->
     path('', inicio, name='inicio'),
-    #path('/eventos', ir al urls.py de la aplicacion "eventos")
-    path('eventos',include('apps.eventos.urls')),
-
-    
+    #path('/articulos', ir al urls.py de la aplicacion "articulos")
+    path('articulos', include('apps.articulos.urls')),
+   
 ]

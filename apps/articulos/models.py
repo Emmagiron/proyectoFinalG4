@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 class Categoria(models.Model):
     categoria_id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
@@ -9,20 +8,16 @@ class Categoria(models.Model):
     def __str__(self):
         return self.nombre
     
-
-class Evento(models.Model):
-    evento_id = models.AutoField(primary_key=True)
-    titulo = models.CharField(max_length=200)
+class Articulo(models.Model):
+    articulo_id = models.AutoField(primary_key=True)
+    titulo = models.CharField(max_length=100)
     descripcion = models.TextField()
     categoria = models.ManyToManyField(Categoria) 
-    fecha_inicio = models.DateTimeField()
-    fecha_fin = models.DateTimeField()
-    hora_inicio = models.TimeField()
-    hora_fin = models.TimeField()
-    ubicacion = models.CharField(max_length=300)
-    es_gratuito = models.BooleanField(default=True)
-    precio=models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-
+    fecha_creacióm = models.DateTimeField()
+    fecha_modificaion = models.DateTimeField()
+    hora_creacion = models.TimeField()
+    hora_modificaion = models.TimeField()
+    autor = models.CharField(max_length=100)
 
     def __str__(self):
         return self.titulo
