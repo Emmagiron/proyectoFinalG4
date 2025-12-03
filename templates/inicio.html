@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOME🏠</title>
-</head>
-<body>
-    <h1>Bienvenidos a la página de inicio🏠</h1>  
-    <a href="/articulos">Ver los articulos disponibles</a>
-    <p>Esta es la página principal de nuestro sitio web.</p>
-</body>
-</html>
+{% extend 'base.html' %}
+
+{% block titulo %}Inicio{% endblock %}
+
+{% block contenido %}
+    <h1>BIENVENIDOS A LA PAGINA INICIAL</h1>
+    <p>Esta es la página de inicio de nuestro sitio web. Aquí encontrarás las últimas noticias y actualizaciones.</p>
+    <a href="{% url 'listar_articulos' %}">Ver todos los artículos</a>
+{% endblock %}

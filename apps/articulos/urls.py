@@ -1,14 +1,14 @@
-
-
 from django.urls import path
 from .views import listar_articulos
 
+app.name = apps.articulos
+
 urlpatterns = [
+    #Www.mipagina.com/articulos/
+    path('', listar_articulos, name='listar_articulos'),
+
     #Www.mipagina.com/articulos/UN_ID
     #path('/UN_ID', detalle_un_articulo, name="inicio"),
-
-    #Www.mipagina.com/articulos/
-    path('', listar_articulos, name="inicio"),
 
     #Www.mipagina.com/articulos/crear
     #path('/crear', crear_articulo, name="inicio"),

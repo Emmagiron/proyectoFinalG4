@@ -1,13 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARTICULOS</title>
-</head>
-<body>
-    <h1>TODOS LOS ARTICULOS</h1>  
-    <a href="/">Volver al inicio</a>
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquid quod vero ad at necessitatibus, debitis laudantium ipsam, totam placeat ullam dolores! Minus, voluptate. Suscipit cupiditate maiores ea culpa ratione nam!</p>
-</body>
-</html>
+{% extend 'base.html' %}
+
+{% block titulo %}Articulos{% endblock %}
+
+{% block contenido %}
+    <h1>Todos los Artículos</h1>
+    <ul>
+        {% for articulo in articulos %}
+            <li>
+                <h2>{{ articulo.titulo }}</h2>
+                <p>{{ articulo.contenido }}</p>
+                <small>Publicado el: {{ articulo.fecha_publicacion }}</small>
+            </li>
+        {% else %}
+            <li>No hay artículos disponibles.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
