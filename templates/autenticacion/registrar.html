@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Registrar Usuario{% endblock %}
+
+{% block contenido %}
+  <div class="container mt-5">
+    <h2 class="mb-4">Registrar Usuario</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Registrarse</button>
+    </form>
+  </div>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import listar_articulos
 
-app.name = apps.articulos
+app_name = 'apps.articulos'
 
 urlpatterns = [
     #Www.mipagina.com/articulos/

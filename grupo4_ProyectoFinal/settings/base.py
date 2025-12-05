@@ -34,8 +34,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.eventos',
-    
+    'apps.articulos',
+    'apps.autenticacion',
 ]
 
 MIDDLEWARE = [
@@ -115,3 +115,5 @@ MEDIA_ROOT =os.path.join(os.path.dirname(BASE_DIR), 'media')
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'autenticacion.Usuario'
