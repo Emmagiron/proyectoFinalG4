@@ -1,3 +1,23 @@
+from django.contrib import admin
+from django.urls import path, include
+from .views import inicio, acerca_de, contacto, caracteristicas
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+
+    #Pagina de inicio www.mipagina.com/->
+    path('', inicio, name='index.html'),
+
+    path('about/', acerca_de, name='about.html'),
+    path('contacto/', contacto, name='contact.html'),
+    path('caracteristicas/', caracteristicas, name='feature.html'),
+
+    #path('articulos', ir al urls.py de la aplicacion "articulos")
+    path('articulos/', include('apps.articulos.urls')),
+    path('usuarios/', include('apps.usuarios.urls')),
+    ]
+
+
 """ 
 URL configuration for grupo4_ProyectoFinal project.
 
@@ -14,30 +34,3 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-
-from django.contrib import admin
-from django.urls import path, include
-from .views import inicio
-from .views import acercade
-from .views import contacto 
-from .views import caracteristicas
-from .views import crear_articulo
-from .views import detalle_articulo
-from .views import modificar_articulo
-from views import todos_los_articulos
-
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    #Pagina de inicio www.mipagina.com/->
-    path('', inicio, name='index.html'),
-    path('about', acercade, name='about.html'),
-    path('contacto', name='contact.html'),
-    path('caracteristicas', name='feature.html'),
-    #path('articulos', ir al urls.py de la aplicacion "articulos")
-    path('articulos', include('apps.articulos.urls')),
-    path('crear_articulo', name= 'crear_articulo.html'),
-    path('detalle_articulo', name='detalle_articulo.html'),
-    path('modificar_articulo', name='modificar_articulo.html'),
-    path('todos_los_articulos', name='todos_los_articulos.html')
-    ]
