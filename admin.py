@@ -1,25 +1,27 @@
-# articulos/admin.py (CORREGIDO)
-
 from django.contrib import admin
-from .models import Articulo, Categoria # También importamos Usuario si vas a usarlo en list_display
+from .models import Usuario 
 
-class ArticuloAdmin(admin.ModelAdmin):
-    # fields: Estos son los campos que se pueden editar en la página de detalle del artículo.
-    # Usaremos los campos existentes en tu modelo:
-    fields = ('titulo', 'contenido', 'autor', 'publicado', 'categoria') # Quité los campos inexistentes
+class UsuarioAdmin(admin.ModelAdmin):
+    list_display = (
+        'usuario_id', 
+        'nombre', 
+        'apellido', 
+        'email', 
+        'rol', 
+        'fecha_registro'
+    )
     
-    # list_display: Columnas mostradas en la lista de artículos.
-    # Deben coincidir con los campos de models.py.
-    list_display = ('titulo', 'autor', 'publicado', 'fecha_creacion') 
+    fields = (
+        ('nombre', 'apellido'),
+        'email', 
+        'contraseña', 
+        'rol',
+        'foto_perfil'
+    )
     
-    # search_fields: Campos que Django usará para la búsqueda.
-    # 'autor__nombre' permite buscar por el nombre del autor (Foreign Key).
-    search_fields = ('titulo', 'contenido', 'autor__nombre')
+    list_filter = ('rol', 'fecha_registro')
+    search_fields = ('nombre', 'apellido', 'email')
     
-    # list_filter: Filtros laterales.
-    # Deben ser campos Field reales (ForeignKey, BooleanField, DateField, etc.)
-    list_filter = ('publicado', 'categoria', 'fecha_creacion') 
+    readonly_fields = ('fecha_registro',)
     
-    
-admin.site.register(Categoria)
-admin.site.register(Articulo, ArticuloAdmin)
+admin.site.register(Usuario, UsuarioAdmin)
