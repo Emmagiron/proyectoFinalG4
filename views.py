@@ -1,14 +1,19 @@
 from django.shortcuts import render
 
-def inicio(request):
-    return render(request, 'index.html')
+# --- CRUD de Artículos ---
 
-def acerca_de(request):
-    return render(request, 'about.html')
+# READ: lista todos los artículos
+def articulos_todos_los(request):
+    return render(request, 'articulos_todos_los.html')
 
-def contacto(request):
-    return render(request, 'contact.html')
+# CREATE: crear un artículo
+def articulos_crear(request):
+    return render(request, 'articulos_crear.html')
 
-def caracteristicas(request):
-    return render(request, 'feature.html')
+# READ: detalle de un artículo
+def articulos_detalle(request, id):
+    return render(request, 'articulos_detalle.html', {'id': id})
 
+# UPDATE: modificar un artículo
+def articulos_modificar(request, id):
+    return render(request, 'articulos_modificar.html', {'id': id})
