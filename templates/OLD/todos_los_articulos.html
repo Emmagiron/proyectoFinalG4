@@ -1,0 +1,18 @@
+{% extend 'base.html' %}
+
+{% block titulo %}Articulos{% endblock %}
+
+{% block contenido %}
+    <h1>Todos los Artículos</h1>
+    <ul>
+        {% for articulo in articulos %}
+            <li>
+                <h2>{{ articulo.titulo }}</h2>
+                <p>{{ articulo.contenido }}</p>
+                <small>Publicado el: {{ articulo.fecha_publicacion }}</small>
+            </li>
+        {% else %}
+            <li>No hay artículos disponibles.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
