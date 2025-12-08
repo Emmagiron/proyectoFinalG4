@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog de Agricultura Inteligente</title>
+</head>
+<body>
+    <h1>Bienvenido a la Agricultura Inteligente</h1>
+    
+    {% for post in posts %}
+        <div class="post-resumen">
+            <h2><a href="{% url 'post_detalle' pk=post.pk %}">{{ post.titulo }}</a></h2>
+            <p>Publicado por {{ post.autor }}</p>
+            
+            {% if post.imagen %}
+            <img src="{{ post.imagen.url }}" alt="Imagen de {{ post.titulo }}" style="max-width: 300px;">
+            {% endif %}
+            
+            <p>{{ post.contenido|truncatechars:200 }}</p> 
+            <a href="{% url 'post_detalle' pk=post.pk %}">Leer más...</a>
+        </div>
+        <hr>
+    {% empty %}
+        <p>Aún no hay publicaciones en el blog.</p>
+    {% endfor %}
+
+</body>
+</html>

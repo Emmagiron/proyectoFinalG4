@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.titulo }}</title>
+</head>
+<body>
+    <nav><a href="{% url 'blog_home' %}">← Volver al Blog</a></nav>
+    
+    <h1>{{ post.titulo }}</h1>
+    
+    {% if post.imagen %}
+    <img src="{{ post.imagen.url }}" alt="Imagen principal de {{ post.titulo }}" style="width: 100%; max-width: 800px;">
+    {% endif %}
+    
+    <div class="contenido-completo">
+        {{ post.contenido|safe }}
+    </div>
+    
+    <p>Autor: {{ post.autor }}</p>
+
+</body>
+</html>

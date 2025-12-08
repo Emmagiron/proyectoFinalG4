@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Lista de posts</h1>
+
+    <!-- Enlaces hacia la app articulos -->
+    <a href="{% url 'articulos:crear' %}">Crear artículo</a>
+    <a href="{% url 'articulos:editar' id=1 %}">Editar artículo</a>
+
+    <ul>
+    {% for post in posts %}
+        <li>
+        <h2>{{ post.titulo }}</h2>
+        <p>{{ post.contenido|truncatewords:30 }}</p>
+        <p><small>{{ post.fecha_creacion }}</small></p>
+        {% if post.imagen %}
+            <img src="{{ post.imagen.url }}" alt="{{ post.titulo }}" style="max-width:200px;">
+        {% endif %}
+        </li>
+    {% empty %}
+        <li>No hay posts todavía.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
