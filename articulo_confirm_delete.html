@@ -1,0 +1,32 @@
+{% extends 'base.html' %} 
+
+{% block title %}Confirmar Eliminación{% endblock %} 
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                
+                <h2 class="text-danger">Confirmar Eliminación</h2>
+                <hr>
+
+                <p>¿Estás seguro de que quieres eliminar el artículo:</p>
+                <h3 class="fw-bold">{{ object.titulo }}?</h3>
+                <p>Esta acción no se puede deshacer.</p>
+
+                <form method="post">
+                    {% csrf_token %} 
+                    
+                    <button type="submit" class="btn btn-danger mt-3">
+                        Sí, Eliminar Artículo
+                    </button>
+                    
+                    <a href="{% url 'articulos:detalle' pk=object.pk %}" class="btn btn-secondary mt-3">
+                        Cancelar
+                    </a>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}
