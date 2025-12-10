@@ -5,7 +5,7 @@ app_name = 'apps.articulos'
 
 urlpatterns = [
     #Www.mipagina.com/articulos/
-    path('', listar_articulos, name='listar_articulos'),
+    #path('', listar_articulos, name='listar_articulos'),
 
     #Www.mipagina.com/articulos/UN_ID
     #path('/UN_ID', detalle_un_articulo, name="inicio"),
