@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %} {% block title %}
+    {# 1. Muestra "Editar" si existe el objeto, sino "Crear Nuevo" #}
+    {% if object %}
+        Editar Articulo: {{ object.titulo }}
+    {% else %}
+        Crear Nuevo Articulo
+    {% endif %}
+{% endblock title %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                
+                <h2>
+                    {% if object %}
+                        Editar Articulo
+                    {% else %}
+                        Crear Nuevo Articulo
+                    {% endif %}
+                </h2>
+
+                <hr>
+
+                <form method="post" enctype="multipart/form-data">
+                    
+                    {% csrf_token %} {{ form.as_p }} 
+
+                    <button type="submit" class="btn btn-primary mt-3">
+                        {% if object %}Guardar Cambios{% else %}Crear Artículo{% endif %}
+                    </button>
+                    
+                    <a href="{% url 'articulos:lista' %}" class="btn btn-secondary mt-3">Cancelar</a>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}

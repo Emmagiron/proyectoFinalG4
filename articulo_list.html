@@ -1,0 +1,117 @@
+{% extends 'base.html' %} 
+{% block title %}Listado de Artículos del Blog{% endblock %} 
+
+{% block content %}
+    
+    <a href="{% url 'articulos:crear' %}" class="btn btn-success mb-4">
+        + Crear Nuevo Artículo
+    </a>
+
+    <div class="row">
+        
+        <div class="col-md-9">
+            <h1>
+                Últimos posts publicados:
+                {% if categoria_actual %}
+                    <small class="text-muted fs-5">| Filtrando por: {{ categoria_actual.nombre }}</small>
+                {% endif %}
+            </h1>
+            
+            {% for articulo in articulos_list %} 
+                <article style="margin-bottom: 20px; border: 1px solid #ccc; padding: 15px;">
+                    
+                    <a href="{% url 'articulos:detalle' pk=articulo.pk %}">
+                        <h2>{{ articulo.titulo }}</h2>
+                    </a>
+                    
+                    {% if articulo.imagen %}
+                    <div class="mb-3">
+                        <img src="{{ articulo.imagen.url }}" alt="{{ articulo.titulo }}" class="img-fluid" style="max-height: 200px; width: auto; object-fit: cover;">
+                    </div>
+                    {% endif %}
+                    
+                    <p>
+                        <strong>Categoría:</strong> 
+                        {# 🔗 Enlace para filtrar por esta categoría directamente #}
+                        <a href="{% url 'articulos:filtrar_por_categoria' pk=articulo.categoria.pk %}">
+                            {{ articulo.categoria }}
+                        </a>
+                    </p>
+                    
+                    <p>
+                        <em>Publicado el {{ articulo.fecha_creacion|date:"d M, Y H:i" }}</em>
+                    </p>
+                    
+                </article>
+            {% empty %}
+                <p>Aún no hay registros de artículos publicados en esta sección.</p>
+            {% endfor %}
+            
+            <hr>
+            
+            {% if is_paginated %}
+                <nav aria-label="Paginación de artículos" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        
+                        {# Botón Anterior #}
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">Anterior</span>
+                            </li>
+                        {% endif %}
+
+                        {# Mostrar página actual/total #}
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">
+                                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+                            </span>
+                        </li>
+
+                        {# Botón Siguiente #}
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">Siguiente</span>
+                            </li>
+                        {% endif %}
+                        
+                    </ul>
+                </nav>
+            {% endif %}
+            
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card my-4">
+                <h5 class="card-header">Filtro por Categoría</h5>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        {# 🔗 Muestra el enlace para ver todos #}
+                        <li class="mb-2">
+                            <a href="{% url 'articulos:lista' %}">
+                                Ver todos los artículos
+                            </a>
+                        </li>
+                        <hr>
+                        {% for categoria in categorias %}
+                            <li>
+                                <a href="{% url 'articulos:filtrar_por_categoria' pk=categoria.pk %}">
+                                    {{ categoria.nombre }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+{% endblock content %}

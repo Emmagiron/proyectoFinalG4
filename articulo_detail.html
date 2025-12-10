@@ -1,0 +1,72 @@
+{% extends 'base.html' %} 
+
+{% block title %}Detalle de: {{ object.titulo }}{% endblock %} 
+
+{% block content %}
+    
+    <article class="p-4"> 
+        
+        <h1>{{ object.titulo }}</h1>
+        
+        <p class="text-muted small">
+            Por **{{ object.autor }}** en la categoría **{{ object.categoria }}**
+            | Publicado el {{ object.fecha_creacion|date:"d M, Y H:i" }} 
+        </p>
+        
+        <hr>
+
+        {% if object.imagen %}
+        <div class="mb-4 text-center">
+            <img src="{{ object.imagen.url }}" alt="{{ object.titulo }}" class="img-fluid rounded shadow-sm" style="max-height: 450px; width: auto; object-fit: cover;">
+        </div>
+        {% endif %}
+        
+        <div class="article-content mb-5 fs-5">
+            <p>{{ object.contenido|linebreaks }}</p>
+        </div>
+        
+        <div class="mb-5">
+            <a href="{% url 'articulos:editar' pk=object.pk %}" class="btn btn-warning me-2">
+                Editar Artículo
+            </a>
+            <a href="{% url 'articulos:eliminar' pk=object.pk %}" class="btn btn-danger me-2">
+                Eliminar
+            </a>
+            <a href="{% url 'articulos:lista' %}" class="btn btn-secondary">Volver al listado</a>
+        </div>
+
+        <hr>
+
+        <section id="comentarios">
+            <h2>Comentarios</h2>
+            
+            {% if object.comentario_set.all %}
+                <ul class="list-unstyled">
+                    {% for comentario in object.comentario_set.all %}
+                        <li class="p-3 mb-2 bg-light border rounded">
+                            <p class="mb-1"><strong>{{ comentario.autor }}</strong> dijo:</p>
+                            <p class="mb-0">{{ comentario.contenido }}</p>
+                            <small class="text-muted">{{ comentario.fecha|date:"d/m/Y H:i" }}</small>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Aún no hay comentarios. ¡Sé el primero!</p>
+            {% endif %}
+
+            <h3 class="mt-4">Deja un comentario</h3>
+            <div class="border p-3 rounded">
+                <form method="post" action="{% url 'articulos:crear_comentario' pk=object.pk %}">
+                    {% csrf_token %}
+                    
+                    {{ form.as_p }} 
+                    
+                    <button type="submit" class="btn btn-primary">Enviar Comentario</button>
+                </form>
+            </div>
+
+        </section>
+
+    </article>
+    
+{% endblock content %}
