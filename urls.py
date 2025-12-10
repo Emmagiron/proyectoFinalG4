@@ -1,33 +1,26 @@
-from django.urls import path
-from .views import (
-    ArticuloListView, 
-    ArticuloDetailView, 
-    ArticuloCreateView, 
-    ArticuloUpdateView, 
-    ArticuloDeleteView,
-    crear_comentario, 
-    ArticulosPorCategoriaListView, 
-    ArticuloSearchView # ⬅️ IMPORTAR LA NUEVA VISTA DE BÚSQUEDA
-)
+"""
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/5.2/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
 
-app_name = 'articulos' 
+from django.contrib import admin
+from django.urls import path, include
+from .views import inicio
 
 urlpatterns = [
-    # URLs de Artículo (CRUD)
-    path('', ArticuloListView.as_view(), name='lista'),
-    
-    # 🏷️ URL para FILTRAR POR CATEGORÍA
-    path('categoria/<int:pk>/', ArticulosPorCategoriaListView.as_view(), name='filtrar_por_categoria'), 
-    
-    # 🔎 NUEVA URL para BÚSQUEDA GLOBAL
-    # La ruta es simple (/buscar/), el filtro 'q' se pasa por parámetro (ej: /articulos/buscar/?q=drones)
-    path('buscar/', ArticuloSearchView.as_view(), name='buscar'), 
-    
-    path('<int:pk>/', ArticuloDetailView.as_view(), name='detalle'),
-    path('nuevo/', ArticuloCreateView.as_view(), name='crear'),
-    path('<int:pk>/editar/', ArticuloUpdateView.as_view(), name='editar'),
-    path('<int:pk>/eliminar/', ArticuloDeleteView.as_view(), name='eliminar'),
-    
-    # 🗣️ URL para el procesamiento de Comentarios
-    path('<int:pk>/comentar/', crear_comentario, name='crear_comentario'), 
+    path('admin/', admin.site.urls),
+    #Pagina de inicio www.mipagina.com/->
+    path('', inicio, name='inicio'),
+    #path('/articulos', ir al urls.py de la aplicacion "articulos")
+    path('articulos', include('apps.articulos.urls')),
 ]

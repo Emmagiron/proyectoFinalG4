@@ -1,29 +1,33 @@
 from django.urls import path
-from .views import listar_articulos
+from .views import (
+    ArticuloListView, 
+    ArticuloDetailView, 
+    ArticuloCreateView, 
+    ArticuloUpdateView, 
+    ArticuloDeleteView,
+    crear_comentario, 
+    ArticulosPorCategoriaListView, 
+    ArticuloSearchView # ⬅️ IMPORTAR LA NUEVA VISTA DE BÚSQUEDA
+)
 
-app_name = 'apps.articulos'
+app_name = 'articulos' 
 
 urlpatterns = [
-    #Www.mipagina.com/articulos/
-    path('', listar_articulos, name='listar_articulos'),
-
-    #Www.mipagina.com/articulos/UN_ID
-    #path('/UN_ID', detalle_un_articulo, name="inicio"),
-
-    #Www.mipagina.com/articulos/crear
-    #path('/crear', crear_articulo, name="inicio"),
-
-    #Www.mipagina.com/articulos/editar/UN_ID
-    #path('/editar/UN_ID', editar_articulo, name="inicio"),
-
-    #Www.mipagina.com/articulos/eliminar/UN_ID
-    #path('/eliminar/UN_ID', eliminar_articulo, name="inicio"), 
-
-    #Www.mipagina.com/articulos/buscar
-    #path('/buscar', buscar_articulo, name="inicio"),
-
-    #Www.mipagina.com/articulos/filtrar
-    #path('/filtrar', filtrar_articulos, name="inicio"),
+    # URLs de Artículo (CRUD)
+    path('', ArticuloListView.as_view(), name='lista'),
     
+    # 🏷️ URL para FILTRAR POR CATEGORÍA
+    path('categoria/<int:pk>/', ArticulosPorCategoriaListView.as_view(), name='filtrar_por_categoria'), 
+    
+    # 🔎 NUEVA URL para BÚSQUEDA GLOBAL
+    # La ruta es simple (/buscar/), el filtro 'q' se pasa por parámetro (ej: /articulos/buscar/?q=drones)
+    path('buscar/', ArticuloSearchView.as_view(), name='buscar'), 
+    
+    path('<int:pk>/', ArticuloDetailView.as_view(), name='detalle'),
+    path('nuevo/', ArticuloCreateView.as_view(), name='crear'),
+    path('<int:pk>/editar/', ArticuloUpdateView.as_view(), name='editar'),
+    path('<int:pk>/eliminar/', ArticuloDeleteView.as_view(), name='eliminar'),
+    
+    # 🗣️ URL para el procesamiento de Comentarios
+    path('<int:pk>/comentar/', crear_comentario, name='crear_comentario'), 
 ]
-

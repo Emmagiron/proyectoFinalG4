@@ -1,53 +1,120 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from django import forms
-from .models import Articulo
+# Importaciones de Django
+from django.views.generic import (
+    ListView, 
+    DetailView, 
+    CreateView, 
+    UpdateView, 
+    DeleteView
+)
+from django.urls import reverse_lazy, reverse
+from django.shortcuts import get_object_or_404, redirect, render 
+from django.db.models import Q # ⬅️ Necesario para la búsqueda OR
 
-# Formulario rápido basado en el modelo (ajústalo si quieres campos específicos)
-class ArticuloForm(forms.ModelForm):
-	class Meta:
-		model = Articulo
-		fields = '__all__'
+# Importaciones de tu aplicación
+from .models import Articulo, Comentario, Categoria 
+from .forms import ArticuloForm, ComentarioForm 
 
-# CREATE (GET - POST)
-def crear_articulo(request):
-	# Lógica para crear un nuevo evento
-	if request.method == 'POST':
-		form = ArticuloForm(request.POST, request.FILES)
-		if form.is_valid():
-			form.save()
-			messages.success(request, "Artículo creado correctamente.")
-			return redirect('listar_articulos')
-	else:
-		form = ArticuloForm()
-	return render(request, 'crear_articulo.html', {'form': form})
+# ------------------- VISTAS DE ARTÍCULO (CLASES) -------------------
 
-# READ (GET)
-def listar_articulos(request):
-	# Lógica para obtener y mostrar la lista de eventos
-	articulos = Articulo.objects.all().order_by('-pk')
-	return render(request, 'todos_los_articulos.html', {'articulos': articulos})
+class ArticuloListView(ListView):
+    model = Articulo 
+    template_name = 'articulos/articulo_list.html' 
+    context_object_name = 'articulos_list'
+    paginate_by = 5 
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categorias'] = Categoria.objects.all()
+        return context
+ 
+class ArticuloDetailView(DetailView):
+    model = Articulo
+    template_name = 'articulos/articulo_detail.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ComentarioForm() 
+        return context
 
-# UPDATE (GET - POST)
-def actualizar_articulo(request, articulo_id):
-	# Lógica para actualizar un evento existente
-	articulo = get_object_or_404(Articulo, pk=articulo_id)
-	if request.method == 'POST':
-		form = ArticuloForm(request.POST, request.FILES, instance=articulo)
-		if form.is_valid():
-			form.save()
-			messages.success(request, "Artículo actualizado correctamente.")
-			return redirect('listar_articulos')
-	else:
-		form = ArticuloForm(instance=articulo)
-	return render(request, 'actualizar_articulo.html', {'form': form, 'articulo': articulo})
+class ArticuloCreateView(CreateView):
+    model = Articulo
+    template_name = 'articulos/articulo_form.html'
+    form_class = ArticuloForm
+    
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('articulos:detalle', kwargs={'pk': self.object.pk})
 
-# DELETE (GET - POST)
-def eliminar_articulo(request, articulo_id):
-	# Lógica para eliminar un evento existente
-	articulo = get_object_or_404(Articulo, pk=articulo_id)
-	if request.method == 'POST':
-		articulo.delete()
-		messages.success(request, "Artículo eliminado correctamente.")
-		return redirect('listar_articulos')
-	return render(request, 'eliminar_articulo.html', {'articulo': articulo})
+class ArticuloUpdateView(UpdateView):
+    model = Articulo
+    template_name = 'articulos/articulo_form.html'
+    form_class = ArticuloForm
+    
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('articulos:detalle', kwargs={'pk': self.object.pk})
+
+class ArticuloDeleteView(DeleteView):
+    model = Articulo
+    template_name = 'articulos/articulo_confirm_delete.html'
+    success_url = reverse_lazy('articulos:lista')
+
+# ------------------- VISTA PARA FILTRADO POR CATEGORÍA -------------------
+
+class ArticulosPorCategoriaListView(ListView):
+    model = Articulo
+    template_name = 'articulos/articulo_list.html'
+    context_object_name = 'articulos_list'
+    paginate_by = 5 
+    
+    def get_queryset(self):
+        categoria_pk = self.kwargs.get('pk')
+        return Articulo.objects.filter(categoria__pk=categoria_pk).order_by('-fecha_creacion')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categoria_pk = self.kwargs.get('pk')
+        context['categoria_actual'] = get_object_or_404(Categoria, pk=categoria_pk)
+        context['categorias'] = Categoria.objects.all() 
+        return context
+
+# ------------------- VISTA PARA BÚSQUEDA GLOBAL -------------------
+
+class ArticuloSearchView(ListView):
+    model = Articulo
+    template_name = 'articulos/articulo_list.html' 
+    context_object_name = 'articulos_list'
+    paginate_by = 5 
+    
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        
+        if query:
+            # Filtra por título O contenido (insensible a mayúsculas)
+            lookups = Q(titulo__icontains=query) | Q(contenido__icontains=query)
+            return Articulo.objects.filter(lookups).order_by('-fecha_creacion')
+        
+        return Articulo.objects.none() 
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q')
+        context['categorias'] = Categoria.objects.all() 
+        return context
+
+# ------------------- VISTA DE COMENTARIO (FUNCIÓN) -------------------
+
+def crear_comentario(request, pk):
+    """
+    Vista para procesar la creación de comentarios adjuntos a un artículo.
+    """
+    articulo = get_object_or_404(Articulo, pk=pk)
+
+    if request.method == 'POST':
+        form = ComentarioForm(request.POST)
+
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            comentario.articulo = articulo
+            comentario.save()
+            return redirect('articulos:detalle', pk=articulo.pk)
+    
+    return redirect('articulos:detalle', pk=articulo.pk)
