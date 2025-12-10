@@ -1,38 +1,41 @@
-""" 
-URL configuration for grupo4_ProyectoFinal project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-
+# Archivo: grupo4_ProyectoFinal/urls.py
 
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import inicio
+
+# Importamos la vista 'inicio' si existe
+try:
+    from .views import inicio # Intentamos importar desde la carpeta actual
+except ImportError:
+    # Si la vista de inicio no está en .views, la ponemos como pass para evitar error.
+    # Si no existe, es mejor que uses la ruta del blog como inicio.
+    pass 
+
 
 urlpatterns = [
-
+    
+    # Rutas Principales
     path('admin/', admin.site.urls),
-    #Pagina de inicio www.mipagina.com/->
-    path('', inicio, name='inicio'),
-    #path('/articulos', ir al urls.py de la aplicacion "articulos"),
-    path('articulos', include('apps.articulos.urls')),
+    
+    # RUTA DE INICIO (Priorizamos la del blog o la de inicio)
+    # Si quieres que el Blog sea la página de inicio (www.mipagina.com/)
+    path('', include('blog.urls')), 
+    
+    # RUTA DE AUTENTICACIÓN
     path('autenticacion/', include('apps.autenticacion.urls')),
-    path('blog/', include('blog.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
+    # RUTAS DE OTRAS APLICACIONES
+    path('articulos/', include('apps.articulos.urls')),
+    
+    # Si la ruta 'blog/' se va a usar para otras cosas, la mantenemos, si no, es redundante
+    # path('blog/', include('blog.urls')), 
+    
+    # Si existe una ruta de autenticación diferente
+    path('cuentas/', include('blog.autenticacion.urls')), 
+]
 
-
-
-
+# Configuración para archivos media (imágenes)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

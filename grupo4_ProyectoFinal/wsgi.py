@@ -1,5 +1,5 @@
 """
-WSGI config for grupo4_ProyectoFinal project.
+WSGI config for Grupo4_ProyectoFinal project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'grupo4_ProyectoFinal.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Grupo4_ProyectoFinal.settings')
 
 application = get_wsgi_application()
