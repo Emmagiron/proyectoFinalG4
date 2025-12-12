@@ -26,6 +26,6 @@ urlpatterns = [
     #Pagina de inicio www.mipagina.com/->
     path('', inicio, name='inicio'),
     #path('/articulos', ir al urls.py de la aplicacion "articulos")
-    path('articulos', include('apps.articulos.urls')),
+    path('articulos/', include('apps.articulos.urls')),
     path('autenticacion/', include('apps.autenticacion.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
