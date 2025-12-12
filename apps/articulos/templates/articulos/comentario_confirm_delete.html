@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Comentario{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-danger shadow-lg">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">Confirmar Eliminación de Comentario</h3>
+                </div>
+                <div class="card-body">
+                    
+                    <p class="lead">Estás a punto de eliminar el siguiente comentario:</p>
+                    
+                    <blockquote class="blockquote border-start border-danger border-5 ps-3 py-2 bg-light rounded">
+                        <p class="mb-0 fst-italic">{{ object.contenido }}</p>
+                        <footer class="blockquote-footer mt-1">
+                            Escrito por **{{ object.autor.username }}**
+                        </footer>
+                    </blockquote>
+
+                    <p class="text-danger mt-3">
+                        **Esta acción es irreversible.** ¿Deseas eliminar este comentario?
+                    </p>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-start mt-4">
+                            <button type="submit" class="btn btn-danger me-2">
+                                <i class="fas fa-trash-alt"></i> Sí, Eliminar Comentario
+                            </button>
+                            
+                            <a href="{% url 'articulos:detalle' pk=object.articulo.pk %}" class="btn btn-secondary">
+                                Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

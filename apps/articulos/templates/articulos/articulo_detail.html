@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ object.titulo }}{% endblock title %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        {# Sección Principal del Artículo #}
+        <article class="card shadow-lg mb-5">
+            {% if object.imagen %}
+                <img src="{{ object.imagen.url }}" class="card-img-top" alt="{{ object.titulo }}" style="max-height: 450px; object-fit: cover;">
+            {% else %}
+                <img src="{% static 'images/placeholder.jpg' %}" class="card-img-top" alt="Imagen por defecto" style="max-height: 450px; object-fit: cover;">
+            {% endif %}
+            
+            <div class="card-body p-5">
+                <div class="mb-3">
+                    <span class="badge bg-success me-2">
+                        <i class="fas fa-tags"></i> {{ object.categoria.nombre }}
+                    </span>
+                    <span class="text-muted small">
+                        Publicado: {{ object.fecha_creacion|date:"d F Y" }}
+                    </span>
+                </div>
+                
+                <h1 class="card-title display-5 fw-bold text-dark mb-4">{{ object.titulo }}</h1>
+                
+                <div class="article-content fs-5 text-secondary">
+                    {{ object.contenido|linebreaks }}
+                </div>
+                
+                <hr class="my-4">
+                
+                <div class="d-flex justify-content-between align-items-center">
+                    <p class="text-muted mb-0">
+                        Autor: <span class="fw-bold">{{ object.autor.username }}</span>
+                    </p>
+                    
+                    {# Botones de edición y eliminación (Visibles solo para el autor) #}
+                    {% if user.is_authenticated and user == object.autor %}
+                        <div>
+                            <a href="{% url 'articulos:editar' pk=object.pk %}" class="btn btn-outline-info btn-sm me-2">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <a href="{% url 'articulos:eliminar' pk=object.pk %}" class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash-alt"></i> Eliminar
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </article>
+        
+        {# Sección de Comentarios #}
+        <section id="comentarios" class="mb-5">
+            <h2 class="mb-4 text-primary">
+                <i class="fas fa-comments"></i> Comentarios ({{ object.comentario_set.count }})
+            </h2>
+
+            {# Formulario para Dejar Comentario #}
+            {% if user.is_authenticated %}
+                <div class="card p-4 mb-4 shadow-sm">
+                    <h5 class="mb-3 text-success">Deja un Comentario</h5>
+                    <form method="post" action="{% url 'articulos:detalle' pk=object.pk %}">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="mb-3">
+                                {{ field }}
+                                {% for error in field.errors %}
+                                    <div class="text-danger small">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Enviar Comentario
+                        </button>
+                    </form>
+                </div>
+            {% else %}
+                <div class="alert alert-info text-center" role="alert">
+                    Debes <a href="{% url 'login' %}" class="alert-link">iniciar sesión</a> para dejar un comentario.
+                </div>
+            {% endif %}
+
+            {# Lista de Comentarios Existentes #}
+            {% for comentario in object.comentario_set.all|dictsort:"fecha_creacion" reversed %}
+                <div class="card mb-3 shadow-sm border-light">
+                    <div class="card-body">
+                        <p class="card-text mb-2">{{ comentario.contenido }}</p>
+                        
+                        <footer class="blockquote-footer mt-1 d-flex justify-content-between align-items-center">
+                            <span>
+                                Por <cite title="Autor">{{ comentario.autor.username }}</cite> el {{ comentario.fecha_creacion|date:"d M Y, H:i" }}
+                            </span>
+                            
+                            {# Botones de Edición/Eliminación de Comentario #}
+                            {% if user.is_authenticated and user == comentario.autor %}
+                                <div>
+                                    <a href="{% url 'articulos:comentario_editar' pk=comentario.pk %}" class="text-info me-2 small">
+                                        Editar
+                                    </a>
+                                    <a href="{% url 'articulos:comentario_eliminar' pk=comentario.pk %}" class="text-danger small">
+                                        Eliminar
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </footer>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-muted">Sé el primero en comentar este artículo.</p>
+            {% endfor %}
+
+        </section>
+
+    </div>
+</div>
+{% endblock content %}

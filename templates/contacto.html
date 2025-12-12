@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contáctanos{% endblock title %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg p-5">
+                
+                <section id="contacto" class="mb-5">
+                    <h1 class="text-success border-bottom pb-2 mb-4">
+                        <i class="fas fa-envelope me-2"></i> Contáctanos
+                    </h1>
+                    <p class="lead mb-4">
+                        Estamos aquí para ayudarte. Si tienes preguntas sobre nuestro contenido o el proyecto, utiliza el siguiente formulario o la información directa del grupo.
+                    </p>
+
+                    <h2 class="text-primary border-bottom pb-2 mb-3">Envíanos un Mensaje</h2>
+                    
+                    {# NOTA: Este formulario DEBERÍA ser manejado por un ContactForm en Django para funcionar #}
+                    <form method="post" action="#"> 
+                        {% csrf_token %} 
+                        
+                        <div class="mb-3">
+                            <label for="id_nombre" class="form-label">Nombre Completo</label>
+                            <input type="text" id="id_nombre" name="nombre" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_email" class="form-label">Correo Electrónico</label>
+                            <input type="email" id="id_email" name="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_asunto" class="form-label">Asunto</label>
+                            <input type="text" id="id_asunto" name="asunto" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_mensaje" class="form-label">Mensaje</label>
+                            <textarea id="id_mensaje" name="mensaje" rows="6" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success mt-2">
+                            <i class="fas fa-paper-plane me-1"></i> Enviar Mensaje
+                        </button>
+                    </form>
+
+                    <div class="mt-5 p-4 border rounded bg-light">
+                        <h2 class="text-secondary mb-3"><i class="fas fa-info-circle me-1"></i> Información Directa del Grupo</h2>
+                        <p class="mb-2"><strong>Correo del Grupo:</strong> 
+                            <a href="mailto:grupo4.informatorio@gmail.com" class="text-primary">grupo4.informatorio@gmail.com</a>
+                        </p>
+                        <p class="mb-0"><strong>Teléfono/WhatsApp:</strong> [+54 9 379 4XXXXXX]</p>
+                    </div>
+                    
+                    <div class="mt-4 p-4 border rounded bg-light">
+                        <h2 class="text-secondary mb-3"><i class="fab fa-github me-1"></i> Recursos del Proyecto</h2>
+                        <p>Puedes ver el código y el progreso en nuestro GitHub:</p>
+                        <a href="https://www.youtube.com/watch?v=g-coH1XtqrQ" target="_blank" class="btn btn-dark">
+                            <i class="fab fa-github me-1"></i> Ver Repositorio en GitHub
+                        </a>
+                    </div>
+
+                </section>
+                
+                <footer class="text-center pt-3 mt-4 border-top">
+                    <p class="mb-0">Regresa al <a href="{% url 'home' %}" class="text-success fw-bold">Inicio</a>.</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

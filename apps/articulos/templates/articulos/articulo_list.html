@@ -1,0 +1,145 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block title %}Listado de Artículos del Blog{% endblock %} 
+
+{% block content %}
+<div class="container mt-4">
+    
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        
+        <h1>
+            {% if busqueda_q %}
+                Resultados para: "{{ busqueda_q }}"
+            {% elif categoria_actual %}
+                Artículos en la categoría: {{ categoria_actual.nombre }}
+            {% else %}
+                Últimos posts publicados
+            {% endif %}
+        </h1>
+        
+        <a href="{% url 'articulos:crear' %}" class="btn btn-success">
+            <i class="fas fa-plus-circle me-1"></i> Crear Nuevo Artículo
+        </a>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-md-9">
+            <form class="form-inline" method="GET" action="{% url 'articulos:buscar' %}">
+                <div class="input-group">
+                    <input class="form-control" type="search" placeholder="Buscar por título o contenido..." aria-label="Search" name="q" value="{{ request.GET.q|default:'' }}">
+                    <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i> Buscar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        
+        <div class="col-md-9">
+            
+            {# ESTA ES LA LÍNEA CRÍTICA CORREGIDA #}
+            {% for articulo in object_list %} 
+                <article class="card mb-4 shadow-sm">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            {% if articulo.imagen %}
+                            <img src="{{ articulo.imagen.url }}" alt="{{ articulo.titulo }}" class="img-fluid rounded-start w-100 h-100" style="object-fit: cover;">
+                            {% else %}
+                            <img src="{% static 'images/placeholder.jpg' %}" alt="Imagen por defecto" class="img-fluid rounded-start w-100 h-100" style="object-fit: cover;">
+                            {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                
+                                <h2 class="card-title">
+                                    <a href="{% url 'articulos:detalle' pk=articulo.pk %}" class="text-decoration-none text-dark">{{ articulo.titulo }}</a>
+                                </h2>
+                                
+                                <p class="card-text text-muted small">
+                                    <strong>Categoría:</strong> 
+                                    <a href="{% url 'articulos:por_categoria' pk=articulo.categoria.pk %}" class="badge bg-secondary text-decoration-none">
+                                        {{ articulo.categoria }}
+                                    </a>
+                                    | Publicado por {{ articulo.autor.username }} el {{ articulo.fecha_creacion|date:"d M, Y H:i" }}
+                                </p>
+                                
+                                <p class="card-text">{{ articulo.contenido|truncatewords:30 }}</p>
+                                
+                                <a href="{% url 'articulos:detalle' pk=articulo.pk %}" class="btn btn-sm btn-outline-primary">Leer más &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            {% empty %}
+                <div class="alert alert-info">Aún no hay registros de artículos publicados en esta sección.</div>
+            {% endfor %}
+            
+            <hr>
+            
+            {% if is_paginated %}
+                <nav aria-label="Paginación de artículos" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if busqueda_q %}&q={{ busqueda_q }}{% endif %}">Anterior</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">Anterior</span>
+                            </li>
+                        {% endif %}
+
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">
+                                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+                            </span>
+                        </li>
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if busqueda_q %}&q={{ busqueda_q }}{% endif %}">Siguiente</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">Siguiente</span>
+                            </li>
+                        {% endif %}
+                        
+                    </ul>
+                </nav>
+            {% endif %}
+            
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card my-4 sticky-top" style="top: 15px;">
+                <h5 class="card-header">Filtro por Categoría</h5>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <a href="{% url 'articulos:lista' %}" {% if not categoria_actual %}class="fw-bold text-success"{% endif %}>
+                                Ver todos los artículos
+                            </a>
+                        </li>
+                        <hr>
+                        {% for categoria in categorias %}
+                            <li>
+                                <a href="{% url 'articulos:por_categoria' pk=categoria.pk %}" 
+                                   {% if categoria_actual.pk == categoria.pk %}class="fw-bold text-success"{% endif %}>
+                                    {{ categoria.nombre }}
+                                </a>
+                            </li>
+                        {% empty %}
+                            <li>No hay categorías.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+{% endblock content %}

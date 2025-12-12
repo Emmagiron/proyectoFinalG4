@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Inicio - Mi Blog AgTech{% endblock %}
+
+{% block content %}
+    <div class="hero_area">
+        {# El CSS fue movido a base.html #}
+        
+        <section class="slider_section position-relative">
+            <div class="container">
+                <div
+                    id="carouselExampleControls"
+                    class="carousel slide"
+                    data-bs-ride="carousel" 
+                >
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="slider_item-box">
+                                <div class="slider_item-container">
+                                    <div class="slider_item-detail">
+                                        <h1>
+                                            AGRICULTURA INTELIGENTE PARA UN MEJOR FUTURO
+                                        </h1>
+                                        <p>
+                                            Bienvenido al blog de tecnología agraria. Encuentra las últimas innovaciones en AgTech.
+                                        </p>
+                                        <div>
+                                            <a href="{% url 'articulos:lista' %}" class="btn btn-success mt-2">
+                                                Ver Artículos
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="slider_item-imgbox">
+                                        <img src="{% static 'images/pc-banner.png' %}" alt="Banner de AgTech" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="carousel-item">
+                            <div class="slider_item-box">
+                                <div class="slider_item-container">
+                                    <div class="slider_item-detail">
+                                        <h1>
+                                            OPTIMIZA TU CULTIVO
+                                        </h1>
+                                        <p>
+                                            Aprende sobre sensores, drones y análisis de datos para aumentar tu rendimiento.
+                                        </p>
+                                        <div>
+                                            <a href="{% url 'contacto' %}" class="btn btn-success mt-2">
+                                                Contáctanos
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="slider_item-imgbox">
+                                        <img src="{% static 'images/pc-banner.png' %}" alt="Banner de AgTech 2" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="about_section layout_padding">
+        <div class="container">
+            <h2 class="text-uppercase">
+                CÓMO FUNCIONA LA AGTECH
+            </h2>
+        </div>
+
+        <div class="container">
+            <div class="about_card-container layout_padding2-top">
+                <div class="about_card">
+                    <div class="about-detail">
+                        <div class="about_img-container">
+                            <div class="about_img-box">
+                                <img src="{% static 'images/work1.png' %}" alt="Fully Responsive" />
+                            </div>
+                        </div>
+                        <div class="card_detail-ox">
+                            <h4>
+                                COMPLETAMENTE ADAPTABLE
+                            </h4>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about_card">
+                    <div class="about-detail">
+                        <div class="about_img-container">
+                            <div class="about_img-box">
+                                <img src="{% static 'images/work2.png' %}" alt="Well Documented" />
+                            </div>
+                        </div>
+                        <div class="card_detail-ox">
+                            <h4>
+                                BIEN DOCUMENTADO
+                            </h4>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about_card">
+                    <div class="about-detail">
+                        <div class="about_img-container">
+                            <div class="about_img-box">
+                                <img src="{% static 'images/work3.png' %}" alt="Easy to Use" />
+                            </div>
+                        </div>
+                        <div class="card_detail-ox">
+                            <h4>
+                                FÁCIL DE USAR
+                            </h4>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="who_section">
+        <div class="container who_container">
+            <div class="who_img-box">
+                <img src="{% static 'images/pc.jpg' %}" alt="Imagen de Quienes Somos" />
+            </div>
+            <div class="who_deail-box">
+                <h2>
+                    ¿Qué es AgTech Blog?
+                </h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodonisi ut aliquip ex ea commodo
+                </p>
+                <div>
+                    <a href="{% url 'acerca_de' %}" class="btn btn-outline-success mt-2">
+                        Leer Más
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature_section layout_padding">
+        <div class="container">
+            <h2 class="text-uppercase">
+                Nuestras Características
+            </h2>
+        </div>
+        <div class="">
+            <div class="feature_card-container layout_padding2">
+                <div class="feature_card">
+                    <div class="feature_img-container">
+                        <div class="feature_img-box">
+                            <img src="{% static 'images/f1.png' %}" alt="Clean Codes" />
+                        </div>
+                    </div>
+                    <div class="feature_detail-box">
+                        <h4>
+                            CÓDIGO LIMPIO
+                        </h4>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                        </p>
+                    </div>
+                </div>
+                <div class="feature_card">
+                    <div class="feature_img-container">
+                        <div class="feature_img-box">
+                            <img src="{% static 'images/f2.png' %}" alt="Perfect Showcase" />
+                        </div>
+                    </div>
+                    <div class="feature_detail-box">
+                        <h4>PERFECTA VITRINA</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+                    </div>
+                </div>
+                <div class="feature_card">
+                    <div class="feature_img-container">
+                        <div class="feature_img-box">
+                            <img src="{% static 'images/f3.png' %}" alt="Free Font" />
+                        </div>
+                    </div>
+                    <div class="feature_detail-box">
+                        <h4>FUENTES LIBRES</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+                    </div>
+                </div>
+                <div class="feature_card">
+                    <div class="feature_img-container">
+                        <div class="feature_img-box">
+                            <img src="{% static 'images/f4.png' %}" alt="High Resolution" />
+                        </div>
+                    </div>
+                    <div class="feature_detail-box">
+                        <h4>ALTA RESOLUCIÓN</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact_section ">
+        <div class="container d-flex justify-content-center">
+            <h2 class="text-uppercase">
+                CONTÁCTANOS
+            </h2>
+        </div>
+        <div class="container-fluid layout_padding-top">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-10 offset-md-2">
+                        <div class="contact_img-box">
+                            <img src="{% static 'images/form-img.jpg' %}" alt="Imagen de Formulario" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 form_bg px-0">
+                    <div class="col-md-10">
+                        {# Aquí debería ir el formulario de contacto #}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

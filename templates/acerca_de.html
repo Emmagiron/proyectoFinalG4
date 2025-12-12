@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Acerca de Nosotros{% endblock title %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card shadow-lg p-5">
+            
+            <section id="sobre-el-blog" class="mb-5">
+                <h1 class="text-success border-bottom pb-2 mb-4">
+                    Acerca de Nuestro Blog: Tecnología Agrícola AgTech
+                </h1>
+                <p class="lead">
+                    Bienvenidos a **Tecnología Agrícola AgTech**. Este espacio digital fue creado con la misión de 
+                    <strong>compartir noticias, análisis y herramientas sobre la innovación digital aplicada al sector agropecuario.</strong>
+                </p>
+                <p>
+                    Nuestro contenido se enfoca en **temáticas como sensores IoT, drones agrícolas, software de gestión de cultivos y big data en el campo**, y tiene como objetivo 
+                    <strong>ser un recurso de referencia para productores, ingenieros y entusiastas que buscan optimizar la eficiencia y sostenibilidad de la agricultura.</strong>
+                </p>
+                <p>
+                    Creemos que la información debe ser accesible y relevante. ¡Esperamos que disfrutes de tu estadía!
+                </p>
+            </section>
+
+            <section id="nuestro-equipo" class="mb-4">
+                <h2 class="text-primary border-bottom pb-2 mb-3">Conoce al Equipo</h2>
+                <p class="mb-4">
+                    Somos un equipo de **4 integrantes** estudiantes del **Informatorio Chaco | 2025 | Desarrollo Web**. Este proyecto es la culminación de los conocimientos adquiridos en el curso, utilizando el framework **Django**.
+                </p>
+
+                <div class="row">
+                    {% for miembro in [
+                        {'nombre': 'Román Huel', 'rol': 'Líder Técnico y Desarrollador Backend', 'contribucion': 'Arquitectura de modelos, lógica de filtrado, implementación de vistas CRUD.'},
+                        {'nombre': 'Valentina Sapag', 'rol': 'Diseñadora Frontend y Administradora', 'contribucion': 'Maquetación HTML/CSS, adaptación responsive, implementación de Comentarios y Registro.'},
+                        {'nombre': 'Emmanuel Girón', 'rol': 'Diseñador Frontend y Administrador', 'contribucion': 'Maquetación HTML/CSS, adaptación responsive, implementación de Comentarios y Registro.'},
+                        {'nombre': 'Maria Celeste Zapata', 'rol': 'Diseñadora Frontend y Administradora', 'contribucion': 'Maquetación HTML/CSS, adaptación responsive, implementación de Comentarios y Registro.'}
+                    ] %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 border-left-success">
+                            <div class="card-body">
+                                <h5 class="card-title text-info fw-bold">{{ miembro.nombre }}</h5>
+                                <p class="card-text"><strong>Rol principal:</strong> {{ miembro.rol }}</p>
+                                <p class="small text-muted mb-0">Contribución: {{ miembro.contribucion }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %} 
+                </div> 
+            </section>
+            
+            <footer class="text-center pt-3 mt-4 border-top">
+                <p>Si deseas comunicarte con nosotros, visita la sección de 
+                    <a href="{% url 'contacto' %}" class="text-success fw-bold">Contacto</a>
+                </p>
+                <p class="text-muted small">© 2025 Tecnología Agrícola AgTech. Proyecto Final Informativo Chaco.</p>
+            </footer>
+        </div>
+    </div>
+</div>
+{% endblock content %}
