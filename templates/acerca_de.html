@@ -32,22 +32,14 @@
                 </p>
 
                 <div class="row">
-                    {% for miembro in [
-                        {'nombre': 'Román Huel', 'rol': 'Líder Técnico y Desarrollador Backend', 'contribucion': 'Arquitectura de modelos, lógica de filtrado, implementación de vistas CRUD.'},
-                        {'nombre': 'Valentina Sapag', 'rol': 'Diseñadora Frontend y Administradora', 'contribucion': 'Maquetación HTML/CSS, adaptación responsive, implementación de Comentarios y Registro.'},
-                        {'nombre': 'Emmanuel Girón', 'rol': 'Diseñador Frontend y Administrador', 'contribucion': 'Maquetación HTML/CSS, adaptación responsive, implementación de Comentarios y Registro.'},
-                        {'nombre': 'Maria Celeste Zapata', 'rol': 'Diseñadora Frontend y Administradora', 'contribucion': 'Maquetación HTML/CSS, adaptación responsive, implementación de Comentarios y Registro.'}
-                    ] %}
-                    <div class="col-md-6 mb-4">
-                        <div class="card h-100 border-left-success">
-                            <div class="card-body">
-                                <h5 class="card-title text-info fw-bold">{{ miembro.nombre }}</h5>
-                                <p class="card-text"><strong>Rol principal:</strong> {{ miembro.rol }}</p>
-                                <p class="small text-muted mb-0">Contribución: {{ miembro.contribucion }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %} 
+                    {% for m in miembros %}
+                        <div class="miembro">
+                            <h3>{{ m.nombre }}</h3>
+                            <p><strong>Rol:</strong> {{ m.rol }}</p>
+                            <p><strong>Contribución:</strong> {{ m.contribucion }}</p>
+                        </div>  
+                    {% endfor %}
+
                 </div> 
             </section>
             
