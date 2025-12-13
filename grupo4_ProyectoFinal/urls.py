@@ -10,7 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     # URLs de Autenticación
-    path('ingreso/', ingresar_usuario, name='login'),
+    path('ingreso/', ingresar_usuario, name='ingresar'),
     path('registro/', registrar_usuario, name='registro'),
 
     # URLs Estáticas del Proyecto (Vistas de la app articulos)
