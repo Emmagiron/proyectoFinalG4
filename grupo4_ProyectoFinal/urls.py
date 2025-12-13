@@ -2,13 +2,16 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from apps.articulos.views import HomeView, AcercaDeView, ContactoView, registro
+from apps.articulos.views import HomeView, AcercaDeView, ContactoView
+from apps.autenticacion.views import registrar_usuario, ingresar_usuario
 
 urlpatterns = [
     # URLs de Administración y de Django (Incluye Login/Logout)
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('registro/', registro, name='registro'),
+    # URLs de Autenticación
+    path('ingreso/', ingresar_usuario, name='login'),
+    path('registro/', registrar_usuario, name='registro'),
 
     # URLs Estáticas del Proyecto (Vistas de la app articulos)
     path('', HomeView.as_view(), name='home'),

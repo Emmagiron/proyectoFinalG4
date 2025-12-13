@@ -1,12 +1,12 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login
+from django.shortcuts import redirect, get_object_or_404
+#from django.contrib.auth import login
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView 
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.decorators import login_required
+#from django.contrib.auth.decorators import login_required
 from django.db.models import Q 
 
-from .forms import ArticuloForm, ComentarioForm, CustomUserCreationForm
+from .forms import ArticuloForm, ComentarioForm
 from .models import Articulo, Categoria, Comentario 
 
 
@@ -29,19 +29,6 @@ class AcercaDeView(TemplateView):
 
 class ContactoView(TemplateView):
     template_name = 'contacto.html'
-
-
-def registro(request):
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user) 
-            return redirect('home')
-    else:
-        form = CustomUserCreationForm()
-        
-    return render(request, 'registration/registro.html', {'form': form})
 
 
 class ArticuloListView(ListView):
