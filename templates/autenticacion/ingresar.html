@@ -2,11 +2,11 @@
 
 {load static %}
 
-{% block titulo %}Registrar Usuario{% endblock %}
+{% block titulo %}Inicio de Sesión{% endblock %}
 
 {% block content %}
   <div class="container mt-5">
-    <h2 class="mb-4">Iniciar Sesion</h2>
+    <h2 class="mb-4">Iniciar Sesión</h2>
     <form method="post">
       {% csrf_token %}
       {{ form.as_p }}

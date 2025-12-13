@@ -11,7 +11,7 @@ def registrar_usuario(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Usuario registrado correctamente.")
-            return redirect('apps.autenticacion:ingresar')
+            return redirect('ingresar')
     # GET
     else:
         form = RegistrarUsuarioForm()

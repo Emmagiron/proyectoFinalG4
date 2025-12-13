@@ -8,7 +8,8 @@ from apps.autenticacion.views import registrar_usuario, ingresar_usuario, cerrar
 urlpatterns = [
     # URLs de Administración y de Django (Incluye Login/Logout)
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
+    #path('accounts/', include('django.contrib.auth.urls')),
+
     # URLs de Autenticación
     path('ingreso/', ingresar_usuario, name='ingresar'),
     path('registro/', registrar_usuario, name='registro'),
