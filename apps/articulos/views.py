@@ -16,6 +16,17 @@ class HomeView(TemplateView):
 class AcercaDeView(TemplateView):
     template_name = 'acerca_de.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['miembros'] = [
+            {'nombre': 'Román Huel', 'rol': 'Líder Técnico y Desarrollador Backend', 'contribucion': 'Arquitectura de modelos, lógica de filtrado, implementación de vistas CRUD.'},
+            {'nombre': 'Valentina Sapag', 'rol': 'Diseñadora Frontend y Administradora', 'contribucion': 'Maquetación HTML/CSS, adaptación responsive, implementación de Comentarios y Registro.'},
+            {'nombre': 'Emmanuel Girón', 'rol': 'Diseñador Frontend y Administrador', 'contribucion': 'Maquetación HTML/CSS, adaptación responsive, implementación de Comentarios y Registro.'},
+            {'nombre': 'Maria Celeste Zapata', 'rol': 'Diseñadora Frontend y Administradora', 'contribucion': 'Maquetación HTML/CSS, adaptación responsive, implementación de Comentarios y Registro.'}
+        ]
+        return context
+
+
 class ContactoView(TemplateView):
     template_name = 'contacto.html'
 
