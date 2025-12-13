@@ -39,4 +39,4 @@ def ingresar_usuario(request):
 
 def cerrar_sesion(request):
     logout(request)
-    return redirect('apps.autenticacion:ingresar')
+    return redirect('home')
