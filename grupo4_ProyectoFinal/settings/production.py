@@ -11,6 +11,6 @@ ALLOWED_HOSTS = ['RomanHuel.pythonanywhere.com']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(os.path.dirname(BASE_DIR), 'db.sqlite3'),
+        'NAME': os.path.join(os.path.dirname(BASE_DIR), 'prod_db.sqlite3'),
     }
 }
