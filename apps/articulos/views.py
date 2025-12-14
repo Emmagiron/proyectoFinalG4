@@ -99,7 +99,11 @@ class ArticuloUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     
     def test_func(self):
         obj = self.get_object()
-        return obj.autor == self.request.user
+        return (
+            obj.autor == self.request.user
+            or self.request.user.is_staff
+            or self.request.user.groups.filter(name='Moderador').exists()
+        )
 
 
 class ArticuloDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -109,7 +113,12 @@ class ArticuloDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
     def test_func(self):
         obj = self.get_object()
-        return obj.autor == self.request.user
+        return (
+            obj.autor == self.request.user
+            or self.request.user.is_staff
+            or self.request.user.groups.filter(name='Moderador').exists()
+        )
+
 
 
 class ArticuloPorCategoriaListView(ListView):
