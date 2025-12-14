@@ -96,7 +96,7 @@
 
                    
 
-                    {% if user|tiene_grupo:'Moderador' %}
+                    {% if user.is_staff or user|tiene_grupo:'Moderador' %}
 
                         <li class="nav-item">
 

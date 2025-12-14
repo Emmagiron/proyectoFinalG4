@@ -5,8 +5,9 @@
 {% block title %}Listado de Artículos del Blog{% endblock %} 
 
 {% block content %}
+
 <div class="container mt-4">
-    
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>
             {% if busqueda_q %}
@@ -14,21 +15,20 @@
             {% elif categoria_actual %}
                 Artículos en la categoría: {{ categoria_actual.nombre }}
             {% else %}
-                Últimos posts publicados
+                Todos los artículos
             {% endif %}
         </h1>
-        {% if user|tiene_grupo:'Moderador' %}
-        <a href="{% url 'articulos:crear' %}" class="btn btn-success">
-            <i class="fas fa-plus-circle me-1"></i> Crear Nuevo Artículo
-        </a>
-        {% endif %}
     </div>
-    
+   
     <div class="row mb-4">
         <div class="col-md-9">
             <form class="form-inline" method="GET" action="{% url 'articulos:buscar' %}">
                 <div class="input-group">
-                    <input class="form-control" type="search" placeholder="Buscar por título o contenido..." aria-label="Search" name="q" value="{{ request.GET.q|default:'' }}">
+                    <input class="form-control" 
+                    type="search" 
+                    placeholder="Buscar por título o contenido..." 
+                    aria-label="Search" name="q" 
+                    value="{{ request.GET.q|default:'' }}">
                     <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i> Buscar</button>
                 </div>
             </form>
@@ -42,15 +42,22 @@
                     <div class="row g-0">
                         <div class="col-md-4">
                             {% if articulo.imagen %}
-                                <img src="{{ articulo.imagen.url }}" alt="{{ articulo.titulo }}" class="img-fluid rounded-start w-100 h-100" style="object-fit: cover;">
+                                <img src="{{ articulo.imagen.url }}" 
+                                alt="{{ articulo.titulo }}" 
+                                class="img-fluid rounded-start w-100 h-100" 
+                                style="object-fit: cover;">
                             {% else %}
-                                <img src="{% static 'images/placeholder_art.png' %}" alt="Imagen por defecto" class="img-fluid rounded-start w-100 h-100" style="object-fit: cover;">
+                                <img src="{% static 'images/placeholder_art.png' %}" 
+                                alt="Imagen por defecto" 
+                                class="img-fluid rounded-start w-100 h-100" 
+                                style="object-fit: cover;">
                             {% endif %}
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h2 class="card-title">
-                                    <a href="{% url 'articulos:detalle' pk=articulo.pk %}" class="text-decoration-none text-dark">{{ articulo.titulo }}</a>
+                                    <a href="{% url 'articulos:detalle' pk=articulo.pk %}" 
+                                    class="text-decoration-none text-dark">{{ articulo.titulo }}</a>
                                 </h2>
                                 
                                 <p class="card-text text-muted small">
@@ -69,7 +76,8 @@
                                 
                                 <p class="card-text">{{ articulo.contenido|truncatewords:30 }}</p>
                                 
-                                <a href="{% url 'articulos:detalle' pk=articulo.pk %}" class="btn btn-sm btn-outline-primary">Leer más &rarr;</a>
+                                <a href="{% url 'articulos:detalle' pk=articulo.pk %}" 
+                                class="btn btn-sm btn-outline-primary">Leer más &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -85,7 +93,11 @@
                     <ul class="pagination justify-content-center">
                         {% if page_obj.has_previous %}
                             <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if busqueda_q %}&q={{ busqueda_q }}{% endif %}">Anterior</a>
+                                <a class="page-link" 
+                                href="?page={{ page_obj.previous_page_number }}
+                                {% if busqueda_q %}
+                                &q={{ busqueda_q }}
+                                {% endif %}">Anterior</a>
                             </li>
                         {% else %}
                             <li class="page-item disabled"><span class="page-link">Anterior</span></li>
@@ -99,7 +111,11 @@
 
                         {% if page_obj.has_next %}
                             <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if busqueda_q %}&q={{ busqueda_q }}{% endif %}">Siguiente</a>
+                                <a class="page-link" 
+                                href="?page={{ page_obj.next_page_number }}
+                                {% if busqueda_q %}
+                                &q={{ busqueda_q }}
+                                {% endif %}">Siguiente</a>
                             </li>
                         {% else %}
                             <li class="page-item disabled"><span class="page-link">Siguiente</span></li>
@@ -110,12 +126,46 @@
         </div>
         
         <div class="col-md-3">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                {% if user.is_staff or user|tiene_grupo:'Moderador' %}
+                    <a href="{% url 'articulos:crear' %}" class="btn btn-success">
+                        <i class="fas fa-plus-circle me-1"></i> Crear Nuevo Artículo
+                    </a>
+                {% endif %}
+            </div>
+            
+            <div class="d-flex justify-content-end mb-4">
+                <span class="text-muted me-3">Ordenar por fecha:</span>
+                {% if categoria_actual %}
+                    {# Estamos en vista de categoría, mantenemos la categoría y el orden #}
+                    <a href="{% url 'articulos:por_categoria' pk=categoria_actual.pk %}?orden=desc"
+                    class="btn btn-sm me-2 {% if orden_actual == 'desc' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                        Más Reciente
+                    </a>
+                    <a href="{% url 'articulos:por_categoria' pk=categoria_actual.pk %}?orden=asc"
+                    class="btn btn-sm {% if orden_actual == 'asc' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                        Más Antiguo
+                    </a>
+                {% else %}
+                    {# Estamos en vista de lista general #}
+                    <a href="{% url 'articulos:lista' %}?orden=desc"
+                    class="btn btn-sm me-2 {% if orden_actual == 'desc' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                        Más Reciente
+                    </a>
+                    <a href="{% url 'articulos:lista' %}?orden=asc"
+                    class="btn btn-sm {% if orden_actual == 'asc' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                        Más Antiguo
+                    </a>
+                {% endif %}
+            </div>
+
             <div class="card my-4 sticky-top" style="top: 15px;">
                 <h5 class="card-header">Filtro por Categoría</h5>
                 <div class="card-body">
                     <ul class="list-unstyled mb-0">
                         <li class="mb-2">
-                            <a href="{% url 'articulos:lista' %}" {% if not categoria_actual %}class="fw-bold text-success"{% endif %}>
+                            <a href="{% url 'articulos:lista' %}" 
+                            {% if not categoria_actual %} class="fw-bold text-success" {% endif %}>
                                 Ver todos los artículos
                             </a>
                         </li>
@@ -123,7 +173,7 @@
                         {% for categoria in categorias %}
                             <li>
                                 <a href="{% url 'articulos:por_categoria' pk=categoria.pk %}" 
-                                   {% if categoria_actual.pk == categoria.pk %}class="fw-bold text-success"{% endif %}>
+                                   {% if categoria_actual.pk == categoria.pk %} class="fw-bold text-success" {% endif %}>
                                     {{ categoria.nombre }}
                                 </a>
                             </li>

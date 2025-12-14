@@ -38,11 +38,47 @@ class ArticuloListView(ListView):
     paginate_by = 5
 
     def get_queryset(self):
-     return Articulo.objects.all()
+        orden = self.request.GET.get('orden', 'desc')
+
+        if orden == 'asc':
+            ordering = 'fecha_creacion'
+        else:
+            ordering = '-fecha_creacion'
+
+        return Articulo.objects.all().order_by(ordering)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categorias'] = Categoria.objects.all()
+        context['orden_actual'] = self.request.GET.get('orden', 'desc') 
+        return context
+
+
+class ArticuloPorCategoriaListView(ListView):
+    model = Articulo
+    template_name = 'articulos/articulo_list.html' 
+    context_object_name = 'object_list'
+    paginate_by = 5
+
+    def get_queryset(self):
+        categoria_pk = self.kwargs['pk']
+        categoria = get_object_or_404(Categoria, pk=categoria_pk)
+        
+        orden = self.request.GET.get('orden', 'desc')
+
+        if orden == 'asc':
+            ordering = 'fecha_creacion'
+        else:
+            ordering = '-fecha_creacion'
+        
+        return Articulo.objects.filter(categorias=categoria).order_by(ordering)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categoria_pk = self.kwargs['pk']
+        context['categorias'] = Categoria.objects.all()
+        context['categoria_actual'] = get_object_or_404(Categoria, pk=categoria_pk)
+        context['orden_actual'] = self.request.GET.get('orden', 'desc') 
         return context
 
 
