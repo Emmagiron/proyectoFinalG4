@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+#from autenticacion.templatetags.grupos import designar_grupo
 
 from .forms import RegistrarUsuarioForm, IngresarUsuarioForm
 

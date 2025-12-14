@@ -1,5 +1,8 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
+
 {% load static %}
+
+{% load grupos %}
 
 {% block title %}Listado de Artículos del Blog{% endblock %} 
 
@@ -17,10 +20,11 @@
                 Últimos posts publicados
             {% endif %}
         </h1>
-        
+        {% if user|tiene_grupo:'Moderador' %}
         <a href="{% url 'articulos:crear' %}" class="btn btn-success">
             <i class="fas fa-plus-circle me-1"></i> Crear Nuevo Artículo
         </a>
+        {% endif %}
     </div>
     
     <div class="row mb-4">

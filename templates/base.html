@@ -1,4 +1,6 @@
- {% load static %}
+{% load static %}
+
+{% load grupos %}
 
 <!DOCTYPE html>
 
@@ -94,7 +96,7 @@
 
                    
 
-                    {% if user.is_authenticated %}
+                    {% if user|tiene_grupo:'Moderador' %}
 
                         <li class="nav-item">
 
@@ -179,17 +181,20 @@
 
                                 </li>
 
+                                {% if user.is_staff %}
+
                                 <li><hr class="dropdown-divider"></li>
 
-                                <li>
+                                    <li>
 
-                                    <a href="{% url 'admin:index' %}" class="dropdown-item">
+                                        <a href="{% url 'admin:index' %}" class="dropdown-item">
 
-                                        <i class="fas fa-user-shield me-1"></i> Admin
+                                            <i class="fas fa-user-shield me-1"></i> Admin
 
-                                    </a>
+                                        </a>
 
-                                </li>
+                                    </li>
+                                {% endif %}
 
                             </ul>
 
