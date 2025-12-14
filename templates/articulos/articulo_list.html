@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
-
 {% load static %}
-
 {% load grupos %}
 
 {% block title %}Listado de Artículos del Blog{% endblock %} 
@@ -10,7 +8,6 @@
 <div class="container mt-4">
     
     <div class="d-flex justify-content-between align-items-center mb-4">
-        
         <h1>
             {% if busqueda_q %}
                 Resultados para: "{{ busqueda_q }}"
@@ -39,33 +36,35 @@
     </div>
 
     <div class="row">
-        
         <div class="col-md-9">
-            
-            {# ESTA ES LA LÍNEA CRÍTICA CORREGIDA #}
             {% for articulo in object_list %} 
                 <article class="card mb-4 shadow-sm">
                     <div class="row g-0">
                         <div class="col-md-4">
                             {% if articulo.imagen %}
-                            <img src="{{ articulo.imagen.url }}" alt="{{ articulo.titulo }}" class="img-fluid rounded-start w-100 h-100" style="object-fit: cover;">
+                                <img src="{{ articulo.imagen.url }}" alt="{{ articulo.titulo }}" class="img-fluid rounded-start w-100 h-100" style="object-fit: cover;">
                             {% else %}
-                            <img src="{% static 'images/placeholder.jpg' %}" alt="Imagen por defecto" class="img-fluid rounded-start w-100 h-100" style="object-fit: cover;">
+                                <img src="{% static 'images/placeholder_art.png' %}" alt="Imagen por defecto" class="img-fluid rounded-start w-100 h-100" style="object-fit: cover;">
                             {% endif %}
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                
                                 <h2 class="card-title">
                                     <a href="{% url 'articulos:detalle' pk=articulo.pk %}" class="text-decoration-none text-dark">{{ articulo.titulo }}</a>
                                 </h2>
                                 
                                 <p class="card-text text-muted small">
-                                    <strong>Categoría:</strong> 
-                                    <a href="{% url 'articulos:por_categoria' pk=articulo.categoria.pk %}" class="badge bg-secondary text-decoration-none">
-                                        {{ articulo.categoria }}
-                                    </a>
-                                    | Publicado por {{ articulo.autor.username }} el {{ articulo.fecha_creacion|date:"d M, Y H:i" }}
+                                    <strong>Categorías:</strong>
+                                    {% for categoria in articulo.categorias.all %}
+                                        <a href="{% url 'articulos:por_categoria' pk=categoria.pk %}" 
+                                           class="badge bg-secondary text-decoration-none">
+                                           {{ categoria.nombre }}
+                                        </a>
+                                    {% empty %}
+                                        <span class="badge bg-secondary">Sin categoría</span>
+                                    {% endfor %}
+                                    <br>
+                                    Publicado por {{ articulo.autor }} el {{ articulo.fecha_creacion|date:"d M, Y H:i" }}
                                 </p>
                                 
                                 <p class="card-text">{{ articulo.contenido|truncatewords:30 }}</p>
@@ -84,15 +83,12 @@
             {% if is_paginated %}
                 <nav aria-label="Paginación de artículos" class="mt-4">
                     <ul class="pagination justify-content-center">
-                        
                         {% if page_obj.has_previous %}
                             <li class="page-item">
                                 <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if busqueda_q %}&q={{ busqueda_q }}{% endif %}">Anterior</a>
                             </li>
                         {% else %}
-                            <li class="page-item disabled">
-                                <span class="page-link">Anterior</span>
-                            </li>
+                            <li class="page-item disabled"><span class="page-link">Anterior</span></li>
                         {% endif %}
 
                         <li class="page-item active" aria-current="page">
@@ -106,15 +102,11 @@
                                 <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if busqueda_q %}&q={{ busqueda_q }}{% endif %}">Siguiente</a>
                             </li>
                         {% else %}
-                            <li class="page-item disabled">
-                                <span class="page-link">Siguiente</span>
-                            </li>
+                            <li class="page-item disabled"><span class="page-link">Siguiente</span></li>
                         {% endif %}
-                        
                     </ul>
                 </nav>
             {% endif %}
-            
         </div>
         
         <div class="col-md-3">
@@ -142,8 +134,6 @@
                 </div>
             </div>
         </div>
-
     </div>
-    
 </div>
 {% endblock content %}
