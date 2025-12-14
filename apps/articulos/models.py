@@ -1,5 +1,7 @@
 from django.db import models
 from django.urls import reverse
+from django.conf import settings
+
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
@@ -13,7 +15,7 @@ class Articulo(models.Model):
     contenido = models.TextField()
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
-    autor = models.CharField(max_length=100) 
+    autor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
     imagen = models.ImageField(upload_to='articulos_imagenes', blank=True, null=True) # Agregado
 
     class Meta:
@@ -29,7 +31,7 @@ class Articulo(models.Model):
 
 class Comentario(models.Model):
     articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE)
-    autor = models.CharField(max_length=100)
+    autor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
     contenido = models.TextField()
     fecha = models.DateTimeField(auto_now_add=True)
 
