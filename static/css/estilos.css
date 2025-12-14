@@ -1,7 +1,7 @@
 body {
   font-family: "Raleway", sans-serif;
-  color: #1b161d;
-  background-color: #ffffff;
+  color: #050500;
+  background-color: #91dda2da;
 }
 
 .body-bg {
@@ -37,7 +37,7 @@ body {
 /*header section*/
 
 .hero_area {
-  background-color: #2801b9;
+  background-color: #e2fa08;
   background-image: url(../images/hero.jpg);
   background-repeat: no-repeat;
   background-size: cover;
@@ -122,7 +122,7 @@ body {
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: rgba(40, 1, 185, 0.9);
+  background-color: rgba(238, 234, 12, 0.993);
   overflow-x: hidden;
   transition: 0.5s;
 }
@@ -275,7 +275,7 @@ a:focus {
 
 .slider_item-detail a {
   display: inline-block;
-  background-color: #fddd33;
+  background-color: #e2fa08;
   color: #fff;
   font-size: 15px;
   border-radius: 10px;
@@ -284,7 +284,7 @@ a:focus {
 
 .slider_item-imgbox {
   margin-top: 45px;
-  width: 75%;
+  width: 90%;
 }
 
 .slider_item-imgbox img {
@@ -364,19 +364,20 @@ a:focus {
 }
 
 .about_img-container {
-  width: 225px;
+  width: 260px;
   background-color: #1ba1b9;
-  height: 225px;
+  height: 260px;
   border-radius: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 25px solid #d7daf4;
+  border: 0,1px solid #d7daf4;
   margin: 0 auto 45px auto;
 }
 
 .about_card .about_img-box {
-  width: 75px;
+width: 100%; 
+  height: 100%;
 }
 
 .about_card .about-detail p {
@@ -385,6 +386,9 @@ a:focus {
 
 .about_card img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 100%;
 }
 
 /* end about section */
@@ -393,7 +397,7 @@ a:focus {
 
 /* who section */
 .who_section {
-  background-color: #2801b9;
+  background-color: #095239;
 }
 
 .who_container {
@@ -408,21 +412,25 @@ a:focus {
 }
 
 .who_section .who_img-box {
-  background-color: #fff;
+background-color: #fff;
   border-radius: 100%;
-  padding: 50px;
-  transform: scale(1.01) translateX(-10%);
+  padding: 0,1px; 
+  transform: scale(1.01) translateX(-1%);
   overflow: hidden;
-  width: 60%;
+  width: 260%; 
+  height: 100%;
 }
 
 .who_img-box img {
   width: 100%;
+  height: 10%;
+  object-fit: cover;
 }
 
 .who_section .who_deail-box {
   text-align: right;
-  width: 40%;
+  width: auto;
+  flex-grow: 1;
 }
 
 .who_section .who_deail-box p {
@@ -431,7 +439,7 @@ a:focus {
 
 .who_section .who_deail-box a {
   display: inline-block;
-  background-color: #fddd33;
+  background-color: #e2fa08;
   color: #fff;
   font-size: 15px;
   border-radius: 10px;
@@ -466,7 +474,8 @@ a:focus {
 }
 
 .feature_img-box {
-  width: 100px;
+  width: 290px;
+  height: 110%;
 }
 
 .feature_card {
@@ -481,6 +490,9 @@ a:focus {
 
 .feature_card img {
   width: 100%;
+    height: 100%;
+    object-fit: cover;
+
 }
 
 .feature_detail-box {
@@ -500,7 +512,7 @@ a:focus {
 }
 
 .form_bg {
-  background-color: #2801b9;
+  background-color: #0c240efd;
 }
 
 .contact_section h2 {
@@ -509,9 +521,9 @@ a:focus {
 }
 
 .contact_section p {
-  color: #787877;
+  color: #ffffff;
   text-align: center;
-  font-size: 20px;
+  font-size: 22px;
   margin-bottom: 0;
 }
 
@@ -531,13 +543,13 @@ a:focus {
 }
 
 .contact_form-container {
-  padding: 45px 35px;
-  width: 90%;
+  padding: 35px 50px;
+  width: 100%;
 }
 
 .contact_form-container button {
   border: none;
-  background-color: #fddd33;
+  background-color: #e2fa08;
   color: #fff;
   padding: 12px 65px;
   font-size: 16px;
@@ -580,7 +592,7 @@ a:focus {
   margin-bottom: 12px;
   font-size: 22px;
   color: #fff;
-  border-bottom: 2px solid #feb543;
+  border-bottom: 2px solid #e2fa08;
 }
 
 .info_section .social-box {
@@ -617,10 +629,10 @@ a:focus {
 }
 
 .info_section .form_container button {
-  background-color: #d9c406;
+  background-color: #e2fa08;
   border: none;
   outline: none;
-  color: #fff;
+  color: #f8f8f2;
   padding: 8px 50px;
   text-transform: uppercase;
   font-size: 16px;
