@@ -6,13 +6,23 @@ from .models import Categoria, Articulo, Comentario
 # --- Configuración para Articulo ---
 class ArticuloAdmin(admin.ModelAdmin):
     # Campos que se muestran en la lista del administrador
-    list_display = ('id', 'titulo', 'categoria', 'fecha_actualizacion', 'autor')
+    list_display = ['id', 'titulo', 'autor', 'categorias_listadas', 'fecha_creacion'] 
+    
+    # 🌟 DEFINICIÓN DEL MÉTODO
+    def categorias_listadas(self, obj):
+        # Toma todas las categorías y las une en una sola cadena separada por comas
+        return ", ".join([c.nombre for c in obj.categorias.all()])
+        
+    # Opcional: Define un encabezado más amigable para la columna
+    categorias_listadas.short_description = "Categorías" 
+    
+    #list_filter = ['categorias']
     
     # Campos que se pueden editar haciendo clic en ellos en la lista
     list_display_links = ('id', 'titulo')
     
     # Campos que se pueden usar para filtrar la lista
-    list_filter = ('categoria', 'autor', 'fecha_actualizacion')
+    list_filter = ('categorias', 'autor', 'fecha_actualizacion')
     
     # Campos que se pueden buscar
     search_fields = ('titulo', 'contenido', 'autor')

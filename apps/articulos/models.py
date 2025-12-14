@@ -1,19 +1,14 @@
 from django.db import models
 from django.urls import reverse
 
-
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
-    
-    class Meta:
-        verbose_name = 'Categoría'
-        verbose_name_plural = 'Categorías'
 
     def __str__(self):
         return self.nombre
 
 class Articulo(models.Model):
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, null=True)
+    categorias = models.ManyToManyField('Categoria', related_name='articulos')
     titulo = models.CharField(max_length=200) # Restaurado
     contenido = models.TextField()
     fecha_creacion = models.DateTimeField(auto_now_add=True)

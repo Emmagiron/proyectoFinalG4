@@ -52,12 +52,19 @@ class ArticuloDetailView(DetailView):
     context_object_name = 'object'
 
     def get_context_data(self, **kwargs):
+        if not hasattr(self, 'object') or self.object is None:
+            self.object = self.get_object() 
+            
         context = super().get_context_data(**kwargs)
-        context['form'] = ComentarioForm() 
+        
+        context['comentarios'] = self.object.comentario_set.all().order_by('-fecha')
+        
+        if 'form' not in context:
+            context['form'] = ComentarioForm() 
+            
         return context
     
     def post(self, request, *args, **kwargs):
-        # Maneja la creación de comentarios (POST) en la misma vista de detalle
         self.object = self.get_object()
         form = ComentarioForm(request.POST)
         
@@ -66,12 +73,11 @@ class ArticuloDetailView(DetailView):
             comentario.articulo = self.object
             comentario.autor = request.user
             comentario.save()
-            # Redirige a la misma página para ver el comentario recién creado
-            return redirect(self.object.get_absolute_url())
+            
+            return redirect(self.object.get_absolute_url() + '#comentarios')
         
-        # Si el formulario es inválido o el usuario no está autenticado, vuelve a renderizar
         context = self.get_context_data(object=self.object)
-        context['form'] = form # Pasa el formulario con errores si es inválido
+        context['form'] = form
         return self.render_to_response(context)
 
 
@@ -114,12 +120,14 @@ class ArticuloPorCategoriaListView(ListView):
 
     def get_queryset(self):
         categoria_pk = self.kwargs['pk']
-        return Articulo.objects.filter(categoria__pk=categoria_pk).order_by('-fecha_creacion')
+        categoria = get_object_or_404(Categoria, pk=categoria_pk)
+        return Articulo.objects.filter(categorias=categoria).order_by('-fecha_creacion')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        categoria_pk = self.kwargs['pk']
         context['categorias'] = Categoria.objects.all()
-        context['categoria_actual'] = get_object_or_404(Categoria, pk=self.kwargs['pk'])
+        context['categoria_actual'] = get_object_or_404(Categoria, pk=categoria_pk)
         return context
 
 
@@ -156,7 +164,7 @@ class ComentarioUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         
     def test_func(self):
         obj = self.get_object()
-        return obj.autor == self.request.user
+        return (obj.autor == self.request.user if obj.autor else False) or self.request.user.is_staff or self.request.user.groups.filter(name='Moderador').exists()
 
 
 class ComentarioDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -168,4 +176,4 @@ class ComentarioDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         obj = self.get_object()
-        return obj.autor == self.request.user
+        return (obj.autor == self.request.user if obj.autor else False) or self.request.user.is_staff or self.request.user.groups.filter(name='Moderador').exists()
