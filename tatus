@@ -1,0 +1,70 @@
+[33m7b29a04[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m actualizar BD
+[33m960ecb7[m nombre db
+[33m5d87fee[m alowerd_host
+[33m05c0a59[m Configuracion inicial produccion
+[33m3cfa066[m Arreglo de problemas
+[33m5eb6432[m Produccion edit
+[33mcd1bbec[m Merge branch 'romarama'
+[33m9017ec4[m[33m ([m[1;31morigin/romarama[m[33m)[m Actualizacion de requirements
+[33m5a5b910[m Merge pull request #8 from Emmagiron/romarama
+[33m4205d57[m Arreglos finales
+[33mefcd606[m Merge pull request #7 from Emmagiron/ramitaemma
+[33m3b31589[m[33m ([m[1;31morigin/ramitaemma[m[33m, [m[1;32mramitaemma[m[33m)[m solucionado autor en detalles y id
+[33m6004eca[m Merge pull request #6 from Emmagiron/romarama
+[33m26313b4[m Correccion de errores
+[33m14acfea[m Merge pull request #5 from Emmagiron/celestito
+[33m8fa525a[m[33m ([m[1;31morigin/celestito[m[33m, [m[1;32mcelestito[m[33m)[m feat: Ajuste las imagenes,cambie colores incio botonos etc,agrege una imagen en html para contactanos
+[33m9c770b8[m Grupos/Roles
+[33m8fba439[m Solución de errores
+[33m4377315[m Merge branch 'romarama'
+[33m1327cc9[m Logout funcional
+[33m3a3e84f[m Merge pull request #4 from Emmagiron/romarama
+[33mcbe1ff4[m Registro e Inicio de Sesion
+[33mf53a236[m Avances en autenticación
+[33m1a608ad[m Merge branch 'romarama'
+[33m2e4c95f[m Merge pull request #3 from Emmagiron/ramitaemma
+[33ma8ef797[m boton al repo en contacto
+[33mc01ddff[m Merge pull request #2 from Emmagiron/ramitaemma
+[33m761f358[m completado home
+[33m2b7863f[m Merge pull request #1 from Emmagiron/ramitaemma
+[33m127c6d8[m modificacion de articulo delete
+[33m951de40[m Autenticacion Base
+[33m8ba59b0[m acerca de funcionando
+[33med2886e[m cambios
+[33m24bbf37[m y cuenta nueva!
+[33me9852cc[m Borrado completo de main
+[33m7e8dd66[m borrado completo
+[33m9e5a0dd[m feat: Configuración final de deploy (Procfile y variables de entorno)
+[33m917ae96[m Merge: Resueltos conflictos de merge en archivos de configuración y URLs.
+[33mbfe4a70[m feat: Se añade el archivo requirements.txt faltante a la rama main
+[33mc059a9b[m chore: Limpieza final de Git. Eliminada carpeta 'apps' duplicada/obsoleta.
+[33m052d914[m refactor: Estandarizada la capitalización del proyecto y limpiado el entorno virtual del seguimiento de Git
+[33m94aca85[m Cambios minimos
+[33m82e356a[m NO CORRESPONDE SUBIR EL ENV
+[33mb504825[m modificaciones
+[33m390e3ce[m Merge branch 'main' of https://github.com/Emmagiron/proyectoFinalG4
+[33m3c06d9a[m Configuracion inicial del blog funcional
+[33m3967147[m definiendo forms
+[33mc6bacdb[m actualizacion del crud
+[33m7688f7c[m correji el crud
+[33mc1cb71d[m templates
+[33m2af67a0[m mejore y elimine errores, runserver funciona ok
+[33md971afe[m CRUD EN APPS Y EN SETTINGS OK
+[33m3789eeb[m TEMPLATES Y URLS ARTICULOS
+[33m3c7ae1b[m mini modificacion que hice ayer
+[33me6c6efd[m CORRECIONES ENORMES LOL
+[33maf2bd17[m Avances template
+[33md7a6a8d[m Templates Boostrap
+[33m1c8ffb9[m Pequeños cambios
+[33mb4b875b[m Avances template.
+[33m97e2d57[m ARTICULOS PARA BLOG DE DJANGO
+[33mb5afce8[m DB Models
+[33mb44734c[m DIAGRAMA DE FLUJO ER
+[33m979a075[m Add files via upload
+[33m4588f63[m README retocado
+[33m6feffab[m De "Eventos" a "Articulos"
+[33m8fb840c[m Update models.py
+[33md052a37[m IMPLEMENTACION 2DA CLASE PF
+[33ma8d4a78[m Readme
+[33m3f8ecda[m Estructura Principal
+[33m61218af[m Initial commit
