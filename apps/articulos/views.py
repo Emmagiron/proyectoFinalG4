@@ -5,7 +5,6 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 #from django.contrib.auth.decorators import login_required
 from django.db.models import Q 
-from django.http import HttpResponseForbidden
 
 from .forms import ArticuloForm, ComentarioForm
 from .models import Articulo, Categoria, Comentario 
@@ -30,6 +29,9 @@ class AcercaDeView(TemplateView):
 
 class ContactoView(TemplateView):
     template_name = 'contacto.html'
+
+class TemplateViewError(TemplateView):
+    template_name = 'error.html'
 
 
 class ArticuloListView(ListView):
@@ -136,7 +138,7 @@ class ArticuloCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         )
     
     def handle_no_permission(self):
-        return redirect('home')
+        return redirect('error')
     
     def form_valid(self, form):
         form.instance.autor = self.request.user
@@ -156,6 +158,9 @@ class ArticuloUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             or self.request.user.groups.filter(name='Moderador').exists()
         )
 
+    def handle_no_permission(self):
+        return redirect('error')
+
 
 class ArticuloDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Articulo
@@ -170,6 +175,8 @@ class ArticuloDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             or self.request.user.groups.filter(name='Moderador').exists()
         )
 
+    def handle_no_permission(self):
+        return redirect('error')
 
 
 class ArticuloPorCategoriaListView(ListView):
@@ -225,6 +232,9 @@ class ComentarioUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         obj = self.get_object()
         return (obj.autor == self.request.user if obj.autor else False) or self.request.user.is_staff or self.request.user.groups.filter(name='Moderador').exists()
+    
+    def handle_no_permission(self):
+        return redirect('error')
 
 
 class ComentarioDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -237,3 +247,6 @@ class ComentarioDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         obj = self.get_object()
         return (obj.autor == self.request.user if obj.autor else False) or self.request.user.is_staff or self.request.user.groups.filter(name='Moderador').exists()
+    
+    def handle_no_permission(self):
+        return redirect('error')

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Acceso Denegado (403){% endblock title %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-lg-8 col-md-10">
+        <div class="card shadow-lg p-5 text-center border-danger">
+            
+            <section id="error-header" class="mb-4">
+                <h1 class="display-1 text-danger fw-bold mb-3">403</h1>
+                <h2 class="text-danger border-bottom pb-2 mb-4">
+                    Acceso Denegado >:[
+                </h2>
+                <p class="lead">
+                    Lamentamos informarte que <strong>no tienes los permisos necesarios</strong> para acceder a esta página o recurso.
+                </p>
+            </section>
+
+            <section id="error-details" class="mb-4">
+                <p>
+                    Esta acción está restringida a usuarios con roles específicos, como <strong>'Moderador'</strong> o <strong>'Administrador'</strong>. Si crees que esto es un error, por favor contacta al soporte.
+                </p>
+                
+                <p class="mt-4">
+                    <a href="{% url 'home' %}" class="btn btn-success btn-lg shadow">
+                        <i class="fas fa-home me-2"></i> Volver a la página principal
+                    </a>
+                </p>
+            </section>
+            
+            <footer class="text-center pt-3 mt-4 border-top">
+                <p class="text-muted small">
+                    Si el problema persiste, revisa tu estado de sesión.
+                </p>
+            </footer>
+        </div>
+    </div>
+</div>
+{% endblock content %}

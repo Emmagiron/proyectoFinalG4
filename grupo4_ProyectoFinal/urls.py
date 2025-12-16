@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from apps.articulos.views import HomeView, AcercaDeView, ContactoView
+from apps.articulos.views import HomeView, AcercaDeView, ContactoView, TemplateViewError
 
 
 urlpatterns = [
@@ -21,6 +21,8 @@ urlpatterns = [
 
     # URLs de la Aplicación de Artículos
     path('articulos/', include(('apps.articulos.urls', 'articulos'), namespace='articulos')),
+
+    path('error/', TemplateViewError.as_view(), name='error'),
 ]
 
 # Configuración para servir archivos estáticos y de media en desarrollo
