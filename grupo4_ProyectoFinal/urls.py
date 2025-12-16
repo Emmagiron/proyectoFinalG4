@@ -11,7 +11,7 @@ urlpatterns = [
     #path('accounts/', include('django.contrib.auth.urls')),
 
     # URLs de Autenticación
-    path('', include(('apps.autenticacion.urls', 'autenticacion'), namespace='autenticacion')),
+    path('auth', include(('apps.autenticacion.urls', 'autenticacion'), namespace='autenticacion')),
 
 
     # URLs Estáticas del Proyecto (Vistas de la app articulos)
