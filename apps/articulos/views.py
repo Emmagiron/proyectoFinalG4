@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 #from django.contrib.auth.decorators import login_required
 from django.db.models import Q 
+from django.http import HttpResponseForbidden
 
 from .forms import ArticuloForm, ComentarioForm
 from .models import Articulo, Categoria, Comentario 
@@ -123,11 +124,19 @@ class ArticuloDetailView(DetailView):
         return self.render_to_response(context)
 
 
-class ArticuloCreateView(LoginRequiredMixin, CreateView):
+class ArticuloCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Articulo
     form_class = ArticuloForm 
     template_name = 'articulos/articulo_form.html'
     success_url = reverse_lazy('articulos:lista')
+    def test_func(self):
+        return (
+            self.request.user.is_staff
+            or self.request.user.groups.filter(name='Moderador').exists()
+        )
+    
+    def handle_no_permission(self):
+        return redirect('home')
     
     def form_valid(self, form):
         form.instance.autor = self.request.user
