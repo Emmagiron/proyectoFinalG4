@@ -173,7 +173,7 @@
 
                                 <li>
 
-                                    <a class="dropdown-item" href="{% url 'cerrar_sesion' %}">
+                                    <a class="dropdown-item" href="{% url 'autenticacion:cerrar_sesion' %}">
 
                                         <i class="fas fa-sign-out-alt me-1"></i> Cerrar Sesión
 
@@ -204,7 +204,7 @@
 
                         <li class="nav-item me-2">
 
-                            <a class="nav-link btn btn-outline-light px-3" href="{% url 'ingresar' %}">
+                            <a class="nav-link btn btn-outline-light px-3" href="{% url 'autenticacion:ingresar' %}">
 
                                 <i class="fas fa-sign-in-alt me-1"></i> Iniciar Sesión
 
@@ -214,7 +214,7 @@
 
                         <li class="nav-item">
 
-                            <a class="nav-link btn btn-success px-3" href="{% url 'registro' %}">
+                            <a class="nav-link btn btn-success px-3" href="{% url 'autenticacion:registrar' %}">
 
                                 <i class="fas fa-user-plus me-1"></i> Registrarse
 

@@ -38,10 +38,16 @@ class ArticuloListView(ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        orden = self.request.GET.get('orden', 'desc')
+        orden = self.request.GET.get('orden', 'fecha_desc')
 
-        if orden == 'asc':
+        if orden == 'fecha_asc':
             ordering = 'fecha_creacion'
+        elif orden == 'fecha_desc':
+            ordering = '-fecha_creacion'
+        elif orden == 'titulo_asc':
+            ordering = 'titulo'
+        elif orden == 'titulo_desc':
+            ordering = '-titulo'
         else:
             ordering = '-fecha_creacion'
 

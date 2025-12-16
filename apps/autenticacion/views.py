@@ -6,13 +6,16 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import RegistrarUsuarioForm, IngresarUsuarioForm
 
 def registrar_usuario(request):
+    #bloquear /registro si ya está autenticado
+    if request.user.is_authenticated:
+        return redirect('home')
     # POST
     if request.method == 'POST':
         form = RegistrarUsuarioForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, "Usuario registrado correctamente.")
-            return redirect('ingresar')
+            return redirect('autenticacion:ingresar')
     # GET
     else:
         form = RegistrarUsuarioForm()
@@ -20,6 +23,9 @@ def registrar_usuario(request):
     return render(request, 'autenticacion/registrar.html', {'form': form})
 
 def ingresar_usuario(request):
+    #bloquear  si ya está autenticado
+    if request.user.is_authenticated:
+        return redirect('home')
     # POST
     if request.method == 'POST':
         form = IngresarUsuarioForm(request.POST)
